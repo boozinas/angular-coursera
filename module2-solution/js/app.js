@@ -11,15 +11,11 @@ ToBuyController.$inject = ['ShoppingListCheckOffService'];
 function ToBuyController(ShoppingListCheckOffService){
     var toBuy = this;
     toBuy.list = ShoppingListCheckOffService.getToBuy();
+    toBuy.empty = 0;
     toBuy.buy = function (index) {
-        try{
             ShoppingListCheckOffService.moveToAlready(index);
-            console.log(ShoppingListCheckOffService.getToBuy());
-            console.log(ShoppingListCheckOffService.getAlready());
+            toBuy.empty=ShoppingListCheckOffService.compareCount();
 
-        }catch(error){
-            toBuy.errorMessage = error.errorMessage;
-        }
     };
 
 }
@@ -28,6 +24,9 @@ AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
 function AlreadyBoughtController(ShoppingListCheckOffService){
     var alreadyBought = this;
     alreadyBought.list = ShoppingListCheckOffService.getAlready();
+    alreadyBought.empty = function(){
+        return ShoppingListCheckOffService.getCount();
+    };
 }
 
 function ShoppingListCheckOffService(){
@@ -63,12 +62,9 @@ function ShoppingListCheckOffService(){
     var total = ToBuyList.length;
 
     service.moveToAlready = function (index) {
-            AlreadyBoughtList.push(ToBuyList[index]);
-            ToBuyList.splice(index, 1);
-            if (ToBuyList.length === 0){
-                console.log("Se acabaron los items");
-                throw new Error("All items(" + total+ ") bought.");
-            }
+        AlreadyBoughtList.push(ToBuyList[index]);
+        ToBuyList.splice(index, 1);
+        count++;
     };
 
     service.getToBuy = function () {
@@ -77,6 +73,14 @@ function ShoppingListCheckOffService(){
 
     service.getAlready = function (){
         return AlreadyBoughtList;  
+    };
+
+    service.getCount = function (){
+        return count;
+    };
+
+    service.compareCount = function () {
+      return count === total;  
     };
 }
 })();
