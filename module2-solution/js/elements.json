@@ -1,0 +1,26 @@
+data = '[
+    {
+        "name": "tortillas",
+        "quantity": "50"
+    },
+    {
+        "name": "nopales",
+        "quantity": "5"
+    },
+    {
+        "name": "aguacates",
+        "quantity": "3"
+    },
+    {
+        "name": "chiles",
+        "quantity": "7"
+    },
+    {
+        "name": "chayotes",
+        "quantity": "5"
+    },
+    {
+        "name": "toothbrushes",
+        "quantity": "2"
+    }
+]';
